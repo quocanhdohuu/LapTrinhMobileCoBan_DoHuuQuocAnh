@@ -2,4 +2,8 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="glass_bg">#99000000</color>
+    <color name="white_transparent">#1AFFFFFF</color>
+    <color name="green_primary">#62B33C</color>
+    <color name="google_blue">#4285F4</color>
 </resources>
