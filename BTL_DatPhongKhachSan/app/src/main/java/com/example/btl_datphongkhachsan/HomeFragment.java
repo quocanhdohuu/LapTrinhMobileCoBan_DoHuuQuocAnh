@@ -49,8 +49,8 @@ public class HomeFragment extends Fragment {
         Button btnCheckAvailability = view.findViewById(R.id.btnCheckAvailability);
 
         // Setup DatePickers
-        view.findViewById(R.id.btnCheckIn).setOnClickListener(v -> showDatePicker(tvCheckIn));
-        view.findViewById(R.id.btnCheckOut).setOnClickListener(v -> showDatePicker(tvCheckOut));
+        view.findViewById(R.id.tvCheckIn).setOnClickListener(v -> showDatePicker(tvCheckIn));
+        view.findViewById(R.id.tvCheckOut).setOnClickListener(v -> showDatePicker(tvCheckOut));
 
         // Setup RecyclerView
         adapter = new RoomTypeAdapter(availableRoomTypes);
