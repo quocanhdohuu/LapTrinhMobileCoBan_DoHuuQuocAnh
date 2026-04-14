@@ -32,9 +32,10 @@ public class HomeFragment extends Fragment {
 
     private TextView tvCheckIn, tvCheckOut;
     private EditText etGuests, etRooms;
-    private RecyclerView rvAvailableRoomTypes;
-    private RoomTypeAdapter adapter;
+    private RecyclerView rvAvailableRoomTypes, rvOurSuites;
+    private RoomTypeAdapter availabilityAdapter, suitesAdapter;
     private List<RoomType> availableRoomTypes = new ArrayList<>();
+    private List<RoomType> allRoomTypes = new ArrayList<>();
 
     @Nullable
     @Override
@@ -46,27 +47,27 @@ public class HomeFragment extends Fragment {
         etGuests = view.findViewById(R.id.etGuests);
         etRooms = view.findViewById(R.id.etRooms);
         rvAvailableRoomTypes = view.findViewById(R.id.rvAvailableRoomTypes);
+        rvOurSuites = view.findViewById(R.id.rvOurSuites);
         Button btnCheckAvailability = view.findViewById(R.id.btnCheckAvailability);
 
         // Setup DatePickers
         view.findViewById(R.id.tvCheckIn).setOnClickListener(v -> showDatePicker(tvCheckIn));
         view.findViewById(R.id.tvCheckOut).setOnClickListener(v -> showDatePicker(tvCheckOut));
 
-        // Setup RecyclerView
-        adapter = new RoomTypeAdapter(availableRoomTypes);
+        // Setup RecyclerView for Availability
+        availabilityAdapter = new RoomTypeAdapter(availableRoomTypes);
         rvAvailableRoomTypes.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-        rvAvailableRoomTypes.setAdapter(adapter);
+        rvAvailableRoomTypes.setAdapter(availabilityAdapter);
+
+        // Setup RecyclerView for Our Suites
+        suitesAdapter = new RoomTypeAdapter(allRoomTypes);
+        rvOurSuites.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        rvOurSuites.setAdapter(suitesAdapter);
 
         btnCheckAvailability.setOnClickListener(v -> performSearch());
 
-        // Suite card navigation
-        View suiteCard = view.findViewById(R.id.suiteCard);
-        if (suiteCard != null) {
-            suiteCard.setOnClickListener(v -> {
-                Intent intent = new Intent(getActivity(), RoomDetailsActivity.class);
-                startActivity(intent);
-            });
-        }
+        // Load all room types for Our Suites
+        loadAllRoomTypes();
 
         return view;
     }
@@ -82,6 +83,26 @@ public class HomeFragment extends Fragment {
             textView.setText(selectedDate);
         }, year, month, day);
         datePickerDialog.show();
+    }
+
+    private void loadAllRoomTypes() {
+        RetrofitClient.getApiService().getAllRoomTypes().enqueue(new Callback<List<RoomType>>() {
+            @Override
+            public void onResponse(Call<List<RoomType>> call, Response<List<RoomType>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    allRoomTypes.clear();
+                    allRoomTypes.addAll(response.body());
+                    suitesAdapter.notifyDataSetChanged();
+                } else {
+                    Log.e("HOME_FRAGMENT", "Error loading all room types: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<RoomType>> call, Throwable t) {
+                Log.e("API_ERROR", "Failed to load all room types: " + t.getMessage());
+            }
+        });
     }
 
     private void performSearch() {
@@ -105,7 +126,7 @@ public class HomeFragment extends Fragment {
                 if (response.isSuccessful() && response.body() != null) {
                     availableRoomTypes.clear();
                     availableRoomTypes.addAll(response.body());
-                    adapter.notifyDataSetChanged();
+                    availabilityAdapter.notifyDataSetChanged();
                     
                     if (availableRoomTypes.isEmpty()) {
                         Toast.makeText(getContext(), "Không có phòng trống cho yêu cầu này", Toast.LENGTH_SHORT).show();

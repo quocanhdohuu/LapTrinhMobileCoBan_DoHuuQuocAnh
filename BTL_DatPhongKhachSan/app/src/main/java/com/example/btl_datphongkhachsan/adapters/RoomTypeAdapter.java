@@ -1,13 +1,16 @@
 package com.example.btl_datphongkhachsan.adapters;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.btl_datphongkhachsan.R;
+import com.example.btl_datphongkhachsan.RoomDetailsActivity;
 import com.example.btl_datphongkhachsan.models.RoomType;
 import java.util.List;
 
@@ -30,10 +33,14 @@ public class RoomTypeAdapter extends RecyclerView.Adapter<RoomTypeAdapter.ViewHo
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         RoomType roomType = roomTypeList.get(position);
         holder.tvRoomName.setText(roomType.getName());
-        holder.tvRoomDesc.setText("Capacity: " + roomType.getCapacity() + " - Available: " + roomType.getAvailableRooms());
-        holder.tvPrice.setText("$" + roomType.getDefaultPrice() + " / night");
+        holder.tvRoomDesc.setText("Capacity: " + roomType.getCapacity() + " - " + roomType.getDescription());
+        holder.tvPrice.setText(String.format("%,.0f VNĐ", roomType.getDefaultPrice()) + " / đêm");
         
-        // Image loading could be added here (e.g., using Glide or Picasso)
+        holder.btnDetails.setOnClickListener(v -> {
+            Intent intent = new Intent(v.getContext(), RoomDetailsActivity.class);
+            intent.putExtra("ROOM_TYPE", roomType);
+            v.getContext().startActivity(intent);
+        });
     }
 
     @Override
@@ -44,6 +51,7 @@ public class RoomTypeAdapter extends RecyclerView.Adapter<RoomTypeAdapter.ViewHo
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView tvRoomName, tvRoomDesc, tvPrice;
         ImageView ivRoomImage;
+        Button btnDetails;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -51,6 +59,7 @@ public class RoomTypeAdapter extends RecyclerView.Adapter<RoomTypeAdapter.ViewHo
             tvRoomDesc = itemView.findViewById(R.id.tvRoomDesc);
             tvPrice = itemView.findViewById(R.id.tvPrice);
             ivRoomImage = itemView.findViewById(R.id.ivRoomImage);
+            btnDetails = itemView.findViewById(R.id.btnDetails);
         }
     }
 }

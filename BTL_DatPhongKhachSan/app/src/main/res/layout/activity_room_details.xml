@@ -22,6 +22,7 @@
                 android:layout_height="350dp">
 
                 <ImageView
+                    android:id="@+id/ivRoomDetail"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="#444"
@@ -32,8 +33,7 @@
                     android:id="@+id/toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
-                    android:background="@drawable/social_button_bg"
-                    app:navigationIcon="@android:drawable/ic_menu_revert">
+                    android:background="@drawable/social_button_bg">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -57,7 +57,7 @@
                     android:id="@+id/btnBack"
                     android:layout_width="56dp"
                     android:layout_height="56dp"
-                    android:background="?attr/selectableItemBackgroundBorderless" />
+                    android:background="?attr/selectableItemBackgroundBorderless"/>
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="wrap_content"
@@ -288,6 +288,7 @@
                     android:textStyle="bold" />
 
                 <TextView
+                    android:id="@+id/tvRoomDesc"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
@@ -361,6 +362,7 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/tvPriceBottom"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="$840 / night"
@@ -369,6 +371,7 @@
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/tvTotalInfo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="TOTAL: $2,520 (3 NIGHTS)"
