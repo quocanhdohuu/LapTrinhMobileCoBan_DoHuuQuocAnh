@@ -67,7 +67,9 @@
     <!-- My Journeys -->
     <string name="my_journeys">My Journeys</string>
     <string name="journeys_desc">Review your curated stays and upcoming adventures across the globe.</string>
+    <string name="booked">Booked</string>
     <string name="upcoming">Upcoming</string>
+    <string name="checkedin">Checked In</string>
     <string name="completed">Completed</string>
     <string name="canceled">Canceled</string>
 

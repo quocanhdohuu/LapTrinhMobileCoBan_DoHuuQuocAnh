@@ -4,6 +4,7 @@ import com.example.btl_datphongkhachsan.models.LoginRequest;
 import com.example.btl_datphongkhachsan.models.LoginResponse;
 import com.example.btl_datphongkhachsan.models.RegisterRequest;
 import com.example.btl_datphongkhachsan.models.RegisterResponse;
+import com.example.btl_datphongkhachsan.models.Reservation;
 import com.example.btl_datphongkhachsan.models.RoomType;
 import com.example.btl_datphongkhachsan.models.SearchAvailableRequest;
 
@@ -13,6 +14,7 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 
 public interface ApiService {
     @POST("api/login/customer")
@@ -26,4 +28,7 @@ public interface ApiService {
 
     @GET("api/get-room-types")
     Call<List<RoomType>> getAllRoomTypes();
+
+    @GET("api/customers/{userId}/reservations")
+    Call<List<Reservation>> getCustomerReservations(@Path("userId") String userId);
 }

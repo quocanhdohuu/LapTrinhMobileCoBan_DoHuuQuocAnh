@@ -3,9 +3,16 @@ package com.example.btl_datphongkhachsan;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class HomeActivity extends AppCompatActivity {
+
+    private final Fragment homeFragment = new HomeFragment();
+    private final Fragment bookingsFragment = new BookingsFragment();
+    private final Fragment profileFragment = new ProfileFragment();
+    private final FragmentManager fm = getSupportFragmentManager();
+    private Fragment active = homeFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -13,32 +20,28 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
 
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
-        
-        // Hiển thị Fragment mặc định là Home
-        if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container, new HomeFragment())
-                    .commit();
-        }
+
+        // Khởi tạo các Fragment và ẩn chúng đi, chỉ hiện HomeFragment
+        fm.beginTransaction().add(R.id.fragment_container, profileFragment, "3").hide(profileFragment).commit();
+        fm.beginTransaction().add(R.id.fragment_container, bookingsFragment, "2").hide(bookingsFragment).commit();
+        fm.beginTransaction().add(R.id.fragment_container, homeFragment, "1").commit();
 
         bottomNav.setOnItemSelectedListener(item -> {
-            Fragment selectedFragment = null;
             int itemId = item.getItemId();
-            
             if (itemId == R.id.nav_home) {
-                selectedFragment = new HomeFragment();
+                fm.beginTransaction().hide(active).show(homeFragment).commit();
+                active = homeFragment;
+                return true;
             } else if (itemId == R.id.nav_bookings) {
-                selectedFragment = new BookingsFragment();
+                fm.beginTransaction().hide(active).show(bookingsFragment).commit();
+                active = bookingsFragment;
+                return true;
             } else if (itemId == R.id.nav_profile) {
-                selectedFragment = new ProfileFragment();
+                fm.beginTransaction().hide(active).show(profileFragment).commit();
+                active = profileFragment;
+                return true;
             }
-
-            if (selectedFragment != null) {
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_container, selectedFragment)
-                        .commit();
-            }
-            return true;
+            return false;
         });
     }
 }

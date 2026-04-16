@@ -1,6 +1,8 @@
 package com.example.btl_datphongkhachsan;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -77,8 +79,18 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    Toast.makeText(MainActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                    LoginResponse loginResponse = response.body();
+                    Toast.makeText(MainActivity.this, loginResponse.getMessage(), Toast.LENGTH_SHORT).show();
                     
+                    // Lưu UserID vào SharedPreferences
+                    if (loginResponse.getAccount() != null) {
+                        SharedPreferences sharedPref = getSharedPreferences("UserPrefs", Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPref.edit();
+                        editor.putString("UserID", loginResponse.getAccount().getUserID());
+                        editor.putString("FullName", loginResponse.getAccount().getFullName());
+                        editor.apply();
+                    }
+
                     // Chuyển sang HomeActivity
                     Intent intent = new Intent(MainActivity.this, HomeActivity.class);
                     startActivity(intent);
