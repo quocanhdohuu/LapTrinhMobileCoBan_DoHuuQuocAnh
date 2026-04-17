@@ -29,7 +29,7 @@ public class ReservationAdapter extends RecyclerView.Adapter<ReservationAdapter.
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Reservation res = reservationList.get(position);
-        holder.tvBookingID.setText("BOOKING ID: #CRT-" + res.getReservationID());
+        holder.tvBookingID.setText("BOOKING ID: " + res.getReservationID());
         holder.tvBookingRoomType.setText(res.getRoomType() + " Room");
         holder.tvBookingPrice.setText(String.format(Locale.getDefault(), "%,.0f VNĐ", res.getTotalAmount()));
         holder.tvBookingStatus.setText(res.getStatus());
