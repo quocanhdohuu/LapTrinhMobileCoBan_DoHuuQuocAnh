@@ -14,6 +14,7 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
@@ -39,4 +40,7 @@ public interface ApiService {
 
     @PUT("api/customers/profile/{userId}")
     Call<Void> updateCustomerProfile(@Path("userId") String userId, @Body CustomerInfo info);
+
+    @PATCH("api/reservations/{reservationId}/cancel")
+    Call<Void> cancelReservation(@Path("reservationId") int reservationId);
 }

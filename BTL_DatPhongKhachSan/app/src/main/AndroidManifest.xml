@@ -36,9 +36,6 @@
             android:name=".BookingConfirmActivity"
             android:exported="false" />
         <activity
-            android:name=".ProfileActivity"
-            android:exported="false" />
-        <activity
             android:name=".PersonalInfoActivity"
             android:exported="false" />
     </application>

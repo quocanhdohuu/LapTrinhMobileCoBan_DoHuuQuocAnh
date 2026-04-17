@@ -37,7 +37,6 @@ public class PersonalInfoActivity extends AppCompatActivity {
         }
 
         findViewById(R.id.btnUpdate).setOnClickListener(v -> updateProfile());
-        findViewById(R.id.btnBack).setOnClickListener(v -> finish());
     }
 
     private void loadCustomerInfo() {
