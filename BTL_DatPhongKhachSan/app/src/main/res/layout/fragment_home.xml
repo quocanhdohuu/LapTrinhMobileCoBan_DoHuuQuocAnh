@@ -124,7 +124,6 @@
                     android:orientation="horizontal">
 
                     <LinearLayout
-                        android:id="@+id/btnCheckIn"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -138,6 +137,7 @@
                             android:textSize="12sp" />
 
                         <LinearLayout
+                            android:id="@+id/btnCheckIn"
                             android:layout_width="match_parent"
                             android:layout_height="56dp"
                             android:layout_marginTop="4dp"
@@ -166,7 +166,6 @@
                     </LinearLayout>
 
                     <LinearLayout
-                        android:id="@+id/btnCheckOut"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -180,6 +179,7 @@
                             android:textSize="12sp" />
 
                         <LinearLayout
+                            android:id="@+id/btnCheckOut"
                             android:layout_width="match_parent"
                             android:layout_height="56dp"
                             android:layout_marginTop="4dp"

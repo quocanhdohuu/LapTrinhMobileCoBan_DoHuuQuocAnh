@@ -13,13 +13,23 @@ import com.example.btl_datphongkhachsan.R;
 import com.example.btl_datphongkhachsan.RoomDetailsActivity;
 import com.example.btl_datphongkhachsan.models.RoomType;
 import java.util.List;
+import java.util.Locale;
 
 public class RoomTypeAdapter extends RecyclerView.Adapter<RoomTypeAdapter.ViewHolder> {
 
     private List<RoomType> roomTypeList;
+    private String checkIn, checkOut;
+    private int numRooms = 1, numPeople = 1;
 
     public RoomTypeAdapter(List<RoomType> roomTypeList) {
         this.roomTypeList = roomTypeList;
+    }
+
+    public void setSearchParameters(String checkIn, String checkOut, int numRooms, int numPeople) {
+        this.checkIn = checkIn;
+        this.checkOut = checkOut;
+        this.numRooms = numRooms;
+        this.numPeople = numPeople;
     }
 
     @NonNull
@@ -34,11 +44,17 @@ public class RoomTypeAdapter extends RecyclerView.Adapter<RoomTypeAdapter.ViewHo
         RoomType roomType = roomTypeList.get(position);
         holder.tvRoomName.setText(roomType.getName());
         holder.tvRoomDesc.setText("Capacity: " + roomType.getCapacity() + " - " + roomType.getDescription());
-        holder.tvPrice.setText(String.format("%,.0f VNĐ", roomType.getDefaultPrice()) + " / đêm");
+        
+        // Sử dụng giá tiền động (Price hoặc DefaultPrice)
+        holder.tvPrice.setText(String.format(Locale.getDefault(), "%,.0f VNĐ", roomType.getDisplayPrice()) + " / đêm");
         
         holder.btnDetails.setOnClickListener(v -> {
             Intent intent = new Intent(v.getContext(), RoomDetailsActivity.class);
             intent.putExtra("ROOM_TYPE", roomType);
+            intent.putExtra("CHECK_IN", checkIn);
+            intent.putExtra("CHECK_OUT", checkOut);
+            intent.putExtra("NUM_ROOMS", numRooms);
+            intent.putExtra("NUM_PEOPLE", numPeople);
             v.getContext().startActivity(intent);
         });
     }

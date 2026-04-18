@@ -1,7 +1,6 @@
 package com.example.btl_datphongkhachsan;
 
 import android.app.DatePickerDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -50,9 +49,9 @@ public class HomeFragment extends Fragment {
         rvOurSuites = view.findViewById(R.id.rvOurSuites);
         Button btnCheckAvailability = view.findViewById(R.id.btnCheckAvailability);
 
-        // Setup DatePickers
-        view.findViewById(R.id.tvCheckIn).setOnClickListener(v -> showDatePicker(tvCheckIn));
-        view.findViewById(R.id.tvCheckOut).setOnClickListener(v -> showDatePicker(tvCheckOut));
+        // Sửa lỗi gán sự kiện: Gán cho LinearLayout bao quanh để tăng diện tích bấm
+        view.findViewById(R.id.btnCheckIn).setOnClickListener(v -> showDatePicker(tvCheckIn));
+        view.findViewById(R.id.btnCheckOut).setOnClickListener(v -> showDatePicker(tvCheckOut));
 
         // Setup RecyclerView for Availability
         availabilityAdapter = new RoomTypeAdapter(availableRoomTypes);
@@ -92,15 +91,14 @@ public class HomeFragment extends Fragment {
                 if (response.isSuccessful() && response.body() != null) {
                     allRoomTypes.clear();
                     allRoomTypes.addAll(response.body());
+                    suitesAdapter.setSearchParameters("yyyy-mm-dd", "yyyy-mm-dd", 1, 1);
                     suitesAdapter.notifyDataSetChanged();
-                } else {
-                    Log.e("HOME_FRAGMENT", "Error loading all room types: " + response.code());
                 }
             }
 
             @Override
             public void onFailure(Call<List<RoomType>> call, Throwable t) {
-                Log.e("API_ERROR", "Failed to load all room types: " + t.getMessage());
+                Log.e("API_ERROR", t.getMessage());
             }
         });
     }
@@ -112,13 +110,17 @@ public class HomeFragment extends Fragment {
         int guests = 1;
         int rooms = 1;
         try {
-            guests = Integer.parseInt(etGuests.getText().toString());
-            rooms = Integer.parseInt(etRooms.getText().toString());
+            String gStr = etGuests.getText().toString();
+            String rStr = etRooms.getText().toString();
+            if (!gStr.isEmpty()) guests = Integer.parseInt(gStr);
+            if (!rStr.isEmpty()) rooms = Integer.parseInt(rStr);
         } catch (NumberFormatException e) {
             Log.e("HOME_FRAGMENT", "Invalid input for guests or rooms");
         }
 
         SearchAvailableRequest request = new SearchAvailableRequest(checkIn, checkOut, guests, rooms);
+        final int finalGuests = guests;
+        final int finalRooms = rooms;
 
         RetrofitClient.getApiService().searchAvailable(request).enqueue(new Callback<List<RoomType>>() {
             @Override
@@ -126,20 +128,18 @@ public class HomeFragment extends Fragment {
                 if (response.isSuccessful() && response.body() != null) {
                     availableRoomTypes.clear();
                     availableRoomTypes.addAll(response.body());
+                    availabilityAdapter.setSearchParameters(checkIn, checkOut, finalRooms, finalGuests);
                     availabilityAdapter.notifyDataSetChanged();
                     
                     if (availableRoomTypes.isEmpty()) {
                         Toast.makeText(getContext(), "Không có phòng trống cho yêu cầu này", Toast.LENGTH_SHORT).show();
                     }
-                } else {
-                    Toast.makeText(getContext(), "Lỗi khi lấy dữ liệu phòng", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<List<RoomType>> call, Throwable t) {
                 Log.e("API_ERROR", t.getMessage());
-                Toast.makeText(getContext(), "Lỗi kết nối server", Toast.LENGTH_SHORT).show();
             }
         });
     }

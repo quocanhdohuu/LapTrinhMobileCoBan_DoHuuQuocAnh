@@ -1,5 +1,7 @@
 package com.example.btl_datphongkhachsan.api;
 
+import com.example.btl_datphongkhachsan.models.BookingRequest;
+import com.example.btl_datphongkhachsan.models.BookingResponse;
 import com.example.btl_datphongkhachsan.models.CustomerInfo;
 import com.example.btl_datphongkhachsan.models.LoginRequest;
 import com.example.btl_datphongkhachsan.models.LoginResponse;
@@ -43,4 +45,7 @@ public interface ApiService {
 
     @PATCH("api/reservations/{reservationId}/cancel")
     Call<Void> cancelReservation(@Path("reservationId") int reservationId);
+
+    @POST("api/reservations/book-room")
+    Call<BookingResponse> bookRoom(@Body BookingRequest request);
 }
