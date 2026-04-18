@@ -2,6 +2,7 @@ package com.example.btl_datphongkhachsan;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
@@ -89,7 +90,6 @@ public class BookingConfirmActivity extends AppCompatActivity {
         calculateAndDisplayTotal();
 
         findViewById(R.id.btnConfirmBooking).setOnClickListener(v -> performBooking());
-        findViewById(R.id.btnBack).setOnClickListener(v -> finish());
     }
 
     private void showDatePicker(EditText editText) {
@@ -172,9 +172,14 @@ public class BookingConfirmActivity extends AppCompatActivity {
             public void onResponse(Call<BookingResponse> call, Response<BookingResponse> response) {
                 if (response.isSuccessful()) {
                     Toast.makeText(BookingConfirmActivity.this, "Đặt phòng thành công!", Toast.LENGTH_LONG).show();
+                    
+                    // Chuyển về HomeActivity và làm mới toàn bộ bằng cách xóa stack cũ
+                    Intent intent = new Intent(BookingConfirmActivity.this, HomeActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
                     finish();
                 } else {
-                    Toast.makeText(BookingConfirmActivity.this, "Lỗi server: " + response.code(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(BookingConfirmActivity.this, "Đặt phòng thất bại", Toast.LENGTH_SHORT).show();
                 }
             }
 
