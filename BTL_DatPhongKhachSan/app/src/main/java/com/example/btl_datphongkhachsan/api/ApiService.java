@@ -8,6 +8,7 @@ import com.example.btl_datphongkhachsan.models.LoginResponse;
 import com.example.btl_datphongkhachsan.models.RegisterRequest;
 import com.example.btl_datphongkhachsan.models.RegisterResponse;
 import com.example.btl_datphongkhachsan.models.Reservation;
+import com.example.btl_datphongkhachsan.models.ReservationModifyRequest;
 import com.example.btl_datphongkhachsan.models.RoomType;
 import com.example.btl_datphongkhachsan.models.SearchAvailableRequest;
 
@@ -51,4 +52,7 @@ public interface ApiService {
 
     @POST("api/reservations/book-room")
     Call<BookingResponse> bookRoom(@Body BookingRequest request);
+
+    @PUT("api/reservations/{reservationId}")
+    Call<Void> modifyReservation(@Path("reservationId") int reservationId, @Body ReservationModifyRequest request);
 }

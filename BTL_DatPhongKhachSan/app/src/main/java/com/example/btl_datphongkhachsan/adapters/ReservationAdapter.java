@@ -1,6 +1,7 @@
 package com.example.btl_datphongkhachsan.adapters;
 
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+import com.example.btl_datphongkhachsan.BookingDetailActivity;
 import com.example.btl_datphongkhachsan.R;
 import com.example.btl_datphongkhachsan.api.RetrofitClient;
 import com.example.btl_datphongkhachsan.models.Reservation;
@@ -47,7 +49,7 @@ public class ReservationAdapter extends RecyclerView.Adapter<ReservationAdapter.
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Reservation res = reservationList.get(position);
         holder.tvBookingID.setText("BOOKING ID: " + res.getReservationID());
-        holder.tvBookingRoomType.setText(res.getRoomType() + " Room");
+        holder.tvBookingRoomType.setText(res.getRoomType());
         holder.tvBookingPrice.setText(String.format(Locale.getDefault(), "%,.0f VNĐ", res.getTotalAmount()));
         holder.tvBookingStatus.setText(res.getStatus());
         holder.tvBookingCheckIn.setText(formatDate(res.getCheckIn()));
@@ -55,7 +57,6 @@ public class ReservationAdapter extends RecyclerView.Adapter<ReservationAdapter.
 
         // Tự động gán ảnh dựa trên tên loại phòng
         if (res.getRoomType() != null) {
-            // Chuyển "Double Room" hoặc "Single 2" thành "double" hoặc "single2"
             String imageName = res.getRoomType().toLowerCase()
                     .replace(" room", "")
                     .replace(" ", "");
@@ -67,6 +68,13 @@ public class ReservationAdapter extends RecyclerView.Adapter<ReservationAdapter.
                 holder.ivBookingRoom.setImageResource(android.R.drawable.ic_menu_gallery);
             }
         }
+
+        // Click vào View Details để sang trang chi tiết
+        holder.btnBookingDetails.setOnClickListener(v -> {
+            Intent intent = new Intent(v.getContext(), BookingDetailActivity.class);
+            intent.putExtra("RESERVATION", res);
+            v.getContext().startActivity(intent);
+        });
 
         // Chỉ hiển thị nút Cancel nếu status là BOOKED
         if ("BOOKED".equalsIgnoreCase(res.getStatus())) {

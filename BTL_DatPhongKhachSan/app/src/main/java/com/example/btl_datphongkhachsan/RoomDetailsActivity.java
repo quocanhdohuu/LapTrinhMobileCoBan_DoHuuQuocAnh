@@ -86,9 +86,6 @@ public class RoomDetailsActivity extends AppCompatActivity {
             });
         }
 
-        View btnBack = findViewById(R.id.btnBack);
-        if (btnBack != null) {
-            btnBack.setOnClickListener(v -> finish());
-        }
+
     }
 }

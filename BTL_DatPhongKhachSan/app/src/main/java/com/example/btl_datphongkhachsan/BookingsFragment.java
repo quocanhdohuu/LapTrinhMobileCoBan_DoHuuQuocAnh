@@ -44,7 +44,6 @@ public class BookingsFragment extends Fragment {
         rvBookings.setLayoutManager(new LinearLayoutManager(getContext()));
         rvBookings.setAdapter(adapter);
 
-        // Lắng nghe sự kiện hủy thành công để load lại dữ liệu
         adapter.setOnReservationCancelledListener(() -> loadReservations());
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -67,9 +66,15 @@ public class BookingsFragment extends Fragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        // Load lại dữ liệu mỗi khi quay lại Fragment này (ví dụ từ trang Detail)
+        loadReservations();
+    }
+
+    @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
-        // Nếu Fragment được hiển thị trở lại (!hidden)
         if (!hidden) {
             loadReservations();
         }
@@ -82,7 +87,6 @@ public class BookingsFragment extends Fragment {
         String userId = sharedPref.getString("UserID", null);
 
         if (userId == null) {
-            Toast.makeText(getContext(), "Không tìm thấy UserID. Vui lòng đăng nhập lại.", Toast.LENGTH_SHORT).show();
             return;
         }
 

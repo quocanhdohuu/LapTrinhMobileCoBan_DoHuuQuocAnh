@@ -38,6 +38,9 @@
         <activity
             android:name=".PersonalInfoActivity"
             android:exported="false" />
+        <activity
+            android:name=".BookingDetailActivity"
+            android:exported="false" />
     </application>
 
 </manifest>

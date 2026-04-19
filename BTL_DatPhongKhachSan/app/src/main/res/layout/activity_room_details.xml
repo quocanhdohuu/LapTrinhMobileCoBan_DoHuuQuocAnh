@@ -52,12 +52,6 @@
                         android:src="@android:drawable/btn_star_big_off" />
                 </androidx.appcompat.widget.Toolbar>
 
-                <!-- Thêm nút back giả định nếu Toolbar navigationIcon không dễ bắt sự kiện -->
-                <View
-                    android:id="@+id/btnBack"
-                    android:layout_width="56dp"
-                    android:layout_height="56dp"
-                    android:background="?attr/selectableItemBackgroundBorderless"/>
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="wrap_content"
