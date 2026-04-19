@@ -65,7 +65,7 @@ public class HomeFragment extends Fragment {
 
         btnCheckAvailability.setOnClickListener(v -> performSearch());
 
-        // Load all room types for Our Suites
+        // Load all room types for Our Suites using the API with price
         loadAllRoomTypes();
 
         return view;
@@ -85,7 +85,8 @@ public class HomeFragment extends Fragment {
     }
 
     private void loadAllRoomTypes() {
-        RetrofitClient.getApiService().getAllRoomTypes().enqueue(new Callback<List<RoomType>>() {
+        // Updated to use getRoomTypesWithPrice API
+        RetrofitClient.getApiService().getRoomTypesWithPrice().enqueue(new Callback<List<RoomType>>() {
             @Override
             public void onResponse(Call<List<RoomType>> call, Response<List<RoomType>> response) {
                 if (response.isSuccessful() && response.body() != null) {

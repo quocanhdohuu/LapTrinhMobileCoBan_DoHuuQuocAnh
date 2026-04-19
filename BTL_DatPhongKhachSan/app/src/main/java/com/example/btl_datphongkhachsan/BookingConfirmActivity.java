@@ -9,6 +9,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
@@ -30,6 +31,7 @@ public class BookingConfirmActivity extends AppCompatActivity {
 
     private TextView tvRoomTypeName, tvTotalPrice, tvPriceDetail;
     private EditText etCheckIn, etCheckOut, etNumRooms, etNumPeople;
+    private ImageView ivRoomBooking;
     private RoomType roomType;
     private double totalPrice;
 
@@ -45,6 +47,7 @@ public class BookingConfirmActivity extends AppCompatActivity {
         etNumPeople = findViewById(R.id.etNumPeople);
         tvTotalPrice = findViewById(R.id.tvTotalPrice);
         tvPriceDetail = findViewById(R.id.tvPriceDetail);
+        ivRoomBooking = findViewById(R.id.ivRoomBooking);
 
         // Nhận dữ liệu từ Intent
         try {
@@ -59,12 +62,22 @@ public class BookingConfirmActivity extends AppCompatActivity {
             return;
         }
 
+        tvRoomTypeName.setText(roomType.getName());
+
+        // Tự động gán ảnh: Chuyển tên về chữ thường và xóa khoảng trắng (ví dụ: "Double 1" -> "double1")
+        String imageName = roomType.getName().toLowerCase().replace(" ", "");
+        int resId = getResources().getIdentifier(imageName, "drawable", getPackageName());
+        if (resId != 0) {
+            ivRoomBooking.setImageResource(resId);
+        } else {
+            ivRoomBooking.setImageResource(android.R.drawable.ic_menu_gallery);
+        }
+
         String checkIn = getIntent().getStringExtra("CHECK_IN");
         String checkOut = getIntent().getStringExtra("CHECK_OUT");
         int numRooms = getIntent().getIntExtra("NUM_ROOMS", 1);
         int numPeople = getIntent().getIntExtra("NUM_PEOPLE", 1);
 
-        tvRoomTypeName.setText(roomType.getName());
         etCheckIn.setText(checkIn != null && !checkIn.isEmpty() ? checkIn : "yyyy-MM-dd");
         etCheckOut.setText(checkOut != null && !checkOut.isEmpty() ? checkOut : "yyyy-MM-dd");
         etNumRooms.setText(String.valueOf(numRooms > 0 ? numRooms : 1));

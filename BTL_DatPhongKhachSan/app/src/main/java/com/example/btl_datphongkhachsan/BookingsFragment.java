@@ -66,7 +66,18 @@ public class BookingsFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        // Nếu Fragment được hiển thị trở lại (!hidden)
+        if (!hidden) {
+            loadReservations();
+        }
+    }
+
     private void loadReservations() {
+        if (getActivity() == null) return;
+
         SharedPreferences sharedPref = getActivity().getSharedPreferences("UserPrefs", Context.MODE_PRIVATE);
         String userId = sharedPref.getString("UserID", null);
 

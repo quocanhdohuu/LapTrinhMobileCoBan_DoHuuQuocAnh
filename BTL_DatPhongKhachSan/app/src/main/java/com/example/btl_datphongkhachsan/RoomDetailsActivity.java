@@ -47,7 +47,17 @@ public class RoomDetailsActivity extends AppCompatActivity {
 
         if (roomType != null) {
             tvRoomTitle.setText(roomType.getName());
-            // Sử dụng getDisplayPrice() để đảm bảo load được giá trong mọi trường hợp
+            
+            // Tự động gán ảnh: Chuyển tên về chữ thường và xóa khoảng trắng (ví dụ: "Double 1" -> "double1")
+            String imageName = roomType.getName().toLowerCase().replace(" ", "");
+            int resId = getResources().getIdentifier(imageName, "drawable", getPackageName());
+            if (resId != 0) {
+                ivRoomDetail.setImageResource(resId);
+            } else {
+                // Ảnh mặc định hệ thống nếu không tìm thấy
+                ivRoomDetail.setImageResource(android.R.drawable.ic_menu_gallery);
+            }
+
             double displayPrice = roomType.getDisplayPrice();
             String priceStr = String.format(Locale.getDefault(), "%,.0f VNĐ", displayPrice);
             tvPrice.setText(priceStr);

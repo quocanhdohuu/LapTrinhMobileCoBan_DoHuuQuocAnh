@@ -13,11 +13,6 @@
         android:background="@color/white"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:src="@android:drawable/ic_menu_search"
-            app:tint="@color/primary_green" />
 
         <TextView
             android:layout_width="wrap_content"

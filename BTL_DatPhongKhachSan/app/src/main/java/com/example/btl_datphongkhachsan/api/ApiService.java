@@ -34,6 +34,9 @@ public interface ApiService {
     @GET("api/get-room-types")
     Call<List<RoomType>> getAllRoomTypes();
 
+    @GET("api/get-room-types/with-price")
+    Call<List<RoomType>> getRoomTypesWithPrice();
+
     @GET("api/customers/{userId}/reservations")
     Call<List<Reservation>> getCustomerReservations(@Path("userId") String userId);
 

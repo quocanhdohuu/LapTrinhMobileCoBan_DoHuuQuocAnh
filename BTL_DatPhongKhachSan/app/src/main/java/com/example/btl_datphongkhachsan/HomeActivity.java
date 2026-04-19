@@ -33,7 +33,8 @@ public class HomeActivity extends AppCompatActivity {
                 active = homeFragment;
                 return true;
             } else if (itemId == R.id.nav_bookings) {
-                fm.beginTransaction().hide(active).show(bookingsFragment).commit();
+                // Sử dụng detach và attach để load lại Fragment (vòng đời view sẽ được chạy lại)
+                fm.beginTransaction().hide(active).detach(bookingsFragment).attach(bookingsFragment).show(bookingsFragment).commit();
                 active = bookingsFragment;
                 return true;
             } else if (itemId == R.id.nav_profile) {

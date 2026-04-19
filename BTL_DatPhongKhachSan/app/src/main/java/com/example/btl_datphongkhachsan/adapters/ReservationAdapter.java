@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
@@ -51,6 +52,21 @@ public class ReservationAdapter extends RecyclerView.Adapter<ReservationAdapter.
         holder.tvBookingStatus.setText(res.getStatus());
         holder.tvBookingCheckIn.setText(formatDate(res.getCheckIn()));
         holder.tvBookingCheckOut.setText(formatDate(res.getCheckOut()));
+
+        // Tự động gán ảnh dựa trên tên loại phòng
+        if (res.getRoomType() != null) {
+            // Chuyển "Double Room" hoặc "Single 2" thành "double" hoặc "single2"
+            String imageName = res.getRoomType().toLowerCase()
+                    .replace(" room", "")
+                    .replace(" ", "");
+            
+            int resId = holder.itemView.getContext().getResources().getIdentifier(imageName, "drawable", holder.itemView.getContext().getPackageName());
+            if (resId != 0) {
+                holder.ivBookingRoom.setImageResource(resId);
+            } else {
+                holder.ivBookingRoom.setImageResource(android.R.drawable.ic_menu_gallery);
+            }
+        }
 
         // Chỉ hiển thị nút Cancel nếu status là BOOKED
         if ("BOOKED".equalsIgnoreCase(res.getStatus())) {
@@ -102,6 +118,7 @@ public class ReservationAdapter extends RecyclerView.Adapter<ReservationAdapter.
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView tvBookingID, tvBookingRoomType, tvBookingPrice, tvBookingStatus, tvBookingCheckIn, tvBookingCheckOut;
+        ImageView ivBookingRoom;
         Button btnCancelBooking, btnBookingDetails;
 
         public ViewHolder(@NonNull View itemView) {
@@ -112,6 +129,7 @@ public class ReservationAdapter extends RecyclerView.Adapter<ReservationAdapter.
             tvBookingStatus = itemView.findViewById(R.id.tvBookingStatus);
             tvBookingCheckIn = itemView.findViewById(R.id.tvBookingCheckIn);
             tvBookingCheckOut = itemView.findViewById(R.id.tvBookingCheckOut);
+            ivBookingRoom = itemView.findViewById(R.id.ivBookingRoom);
             btnCancelBooking = itemView.findViewById(R.id.btnCancelBooking);
             btnBookingDetails = itemView.findViewById(R.id.btnBookingDetails);
         }
