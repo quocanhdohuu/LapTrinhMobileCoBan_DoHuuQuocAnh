@@ -107,7 +107,7 @@ public class HomeFragment extends Fragment {
     private void performSearch() {
         String checkIn = tvCheckIn.getText().toString();
         String checkOut = tvCheckOut.getText().toString();
-        
+
         int guests = 1;
         int rooms = 1;
         try {
@@ -131,7 +131,7 @@ public class HomeFragment extends Fragment {
                     availableRoomTypes.addAll(response.body());
                     availabilityAdapter.setSearchParameters(checkIn, checkOut, finalRooms, finalGuests);
                     availabilityAdapter.notifyDataSetChanged();
-                    
+
                     if (availableRoomTypes.isEmpty()) {
                         Toast.makeText(getContext(), "Không có phòng trống cho yêu cầu này", Toast.LENGTH_SHORT).show();
                     }
