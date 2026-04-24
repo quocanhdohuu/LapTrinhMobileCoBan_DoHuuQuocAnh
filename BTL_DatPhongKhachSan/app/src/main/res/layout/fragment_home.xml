@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:background="#F8F8F8">
 
     <LinearLayout
@@ -66,8 +66,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="#444"
-                    android:src="@drawable/image_home1"
-                    android:scaleType="centerCrop" />
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/image_home1" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -144,10 +144,10 @@
                             android:layout_marginEnd="8dp"
                             android:background="@drawable/social_button_bg"
                             android:backgroundTint="@color/white"
-                            android:gravity="center_vertical"
-                            android:paddingHorizontal="12dp"
                             android:clickable="true"
-                            android:focusable="true">
+                            android:focusable="true"
+                            android:gravity="center_vertical"
+                            android:paddingHorizontal="12dp">
 
                             <ImageView
                                 android:layout_width="20dp"
@@ -186,10 +186,10 @@
                             android:layout_marginStart="8dp"
                             android:background="@drawable/social_button_bg"
                             android:backgroundTint="@color/white"
-                            android:gravity="center_vertical"
-                            android:paddingHorizontal="12dp"
                             android:clickable="true"
-                            android:focusable="true">
+                            android:focusable="true"
+                            android:gravity="center_vertical"
+                            android:paddingHorizontal="12dp">
 
                             <ImageView
                                 android:layout_width="20dp"
@@ -217,9 +217,9 @@
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
                         android:layout_weight="1"
-                        android:orientation="vertical"
-                        android:layout_marginEnd="8dp">
+                        android:orientation="vertical">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -249,8 +249,8 @@
                                 android:layout_marginStart="8dp"
                                 android:layout_weight="1"
                                 android:background="@null"
-                                android:inputType="number"
                                 android:hint="SL khách"
+                                android:inputType="number"
                                 android:textColor="@color/black"
                                 android:textStyle="bold" />
                         </LinearLayout>
@@ -259,9 +259,9 @@
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
                         android:layout_weight="1"
-                        android:orientation="vertical"
-                        android:layout_marginStart="8dp">
+                        android:orientation="vertical">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -291,8 +291,8 @@
                                 android:layout_marginStart="8dp"
                                 android:layout_weight="1"
                                 android:background="@null"
-                                android:inputType="number"
                                 android:hint="SL phòng"
+                                android:inputType="number"
                                 android:textColor="@color/black"
                                 android:textStyle="bold" />
                         </LinearLayout>
@@ -421,6 +421,7 @@
             </LinearLayout>
         </LinearLayout>
 
+        <!-- Our Suites Header -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -438,20 +439,63 @@
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/tvViewAllOurSuites"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:clickable="true"
+                android:focusable="true"
                 android:text="@string/view_all"
                 android:textColor="@color/text_gray"
                 android:textSize="14sp" />
+        </LinearLayout>
+
+        <!-- New Search Bar for Suites -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/search_bar_bg"
+            android:elevation="2dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="4dp">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginStart="12dp"
+                android:src="@android:drawable/ic_menu_search"
+                app:tint="@color/text_gray" />
+
+            <EditText
+                android:id="@+id/etSearchOurSuites"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:background="@null"
+                android:hint="Search suites..."
+                android:imeOptions="actionSearch"
+                android:inputType="text"
+                android:textSize="16sp" />
+
+            <ImageButton
+                android:id="@+id/btnSearchSuites"
+                android:layout_width="48dp"
+                android:layout_height="44dp"
+                android:background="@drawable/search_button_bg"
+                android:src="@android:drawable/ic_menu_search"
+                app:tint="@color/white" />
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvOurSuites"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
             android:orientation="horizontal"
             android:paddingHorizontal="8dp"
-            android:layout_marginTop="16dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:listitem="@layout/item_available_room_type" />
     </LinearLayout>
