@@ -31,7 +31,7 @@ public class BookingConfirmActivity extends AppCompatActivity {
 
     private TextView tvRoomTypeName, tvTotalPrice, tvPriceDetail;
     private EditText etCheckIn, etCheckOut, etNumRooms, etNumPeople;
-    private ImageView ivRoomBooking;
+    private ImageView ivRoomBooking, ivBack;
     private RoomType roomType;
     private double totalPrice;
 
@@ -48,6 +48,9 @@ public class BookingConfirmActivity extends AppCompatActivity {
         tvTotalPrice = findViewById(R.id.tvTotalPrice);
         tvPriceDetail = findViewById(R.id.tvPriceDetail);
         ivRoomBooking = findViewById(R.id.ivRoomBooking);
+        ivBack = findViewById(R.id.backIntent);
+
+        ivBack.setOnClickListener(v -> finish());
 
         // Nhận dữ liệu từ Intent
         try {

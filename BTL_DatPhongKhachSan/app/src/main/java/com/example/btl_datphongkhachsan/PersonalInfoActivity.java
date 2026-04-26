@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.btl_datphongkhachsan.api.RetrofitClient;
@@ -17,6 +18,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
 
     private EditText etFullName, etEmail, etPhone, etCCCD, etPassword;
     private String userId;
+    private ImageView ivBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +30,9 @@ public class PersonalInfoActivity extends AppCompatActivity {
         etPhone = findViewById(R.id.etPhone);
         etCCCD = findViewById(R.id.etCCCD);
         etPassword = findViewById(R.id.etPassword);
+        ivBack = findViewById(R.id.backIntent);
+
+        ivBack.setOnClickListener(v -> finish());
 
         SharedPreferences sharedPref = getSharedPreferences("UserPrefs", Context.MODE_PRIVATE);
         userId = sharedPref.getString("UserID", null);

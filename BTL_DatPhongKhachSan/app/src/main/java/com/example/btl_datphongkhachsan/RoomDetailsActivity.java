@@ -17,7 +17,7 @@ import java.util.Locale;
 
 public class RoomDetailsActivity extends AppCompatActivity {
 
-    private ImageView ivRoomDetail;
+    private ImageView ivRoomDetail, ivBack;
     private TextView tvRoomTitle, tvPrice, tvPriceBottom, tvRoomDesc;
     private RoomType roomType;
     private String checkIn, checkOut;
@@ -85,6 +85,11 @@ public class RoomDetailsActivity extends AppCompatActivity {
                 startActivity(intent);
             });
         }
+
+        ivBack = findViewById(R.id.backIntent);
+        ivBack.setOnClickListener(v -> {
+            finish();
+        });
 
 
     }

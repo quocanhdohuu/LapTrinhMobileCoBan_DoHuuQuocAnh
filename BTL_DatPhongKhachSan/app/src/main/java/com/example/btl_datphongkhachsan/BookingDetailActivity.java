@@ -32,7 +32,7 @@ import retrofit2.Response;
 
 public class BookingDetailActivity extends AppCompatActivity {
 
-    private ImageView ivRoomDetail;
+    private ImageView ivRoomDetail, ivBack;
     private TextView tvRoomTypeName, tvBookingID, tvStatus, tvPriceInfo;
     private TextView tvCheckInFormatted, tvCheckOutFormatted;
     private EditText etCheckIn, etCheckOut, etQuantity;
@@ -62,6 +62,9 @@ public class BookingDetailActivity extends AppCompatActivity {
         
         etQuantity = findViewById(R.id.etQuantity);
         btnSaveChanges = findViewById(R.id.btnSaveChanges);
+        ivBack = findViewById(R.id.backIntent);
+
+        ivBack.setOnClickListener(v -> finish());
 
         reservation = (Reservation) getIntent().getSerializableExtra("RESERVATION");
 
